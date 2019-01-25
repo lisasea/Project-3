@@ -34,7 +34,13 @@
           <option value="designer">Designer</option>          
           <option value="student">Student</option>
           <option value="other">Other</option>  
-        </select>           
+        </select>
+
+      <div id = "other">
+        <label for="other-title">Other:</label> 
+        <input type="text" id="other-title" name="user_title" placeholder="Your Job Role">         
+      </div>
+
       </fieldset>
       
       <fieldset class="shirt">
@@ -80,9 +86,9 @@
         <label><input type="checkbox" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
         <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>          
         <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
-        <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
-                  	
+        <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>            	
       </fieldset>
+
       <fieldset>
         <legend>Payment Info</legend>
 
@@ -150,6 +156,8 @@
       
     </form>
 
-	</div>
+  </div>
+ <script src="js/jquery-3.3.1.min.js"></script>  //need to download jquery.com store in js folder and name it this
+ <script src="js/script.js"></script> 
 </body>
 </html>
