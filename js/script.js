@@ -3,16 +3,12 @@
  ***********************/
 
 
-//$("input, textarea, select").filter(":first").focus();
-
 $(document).ready(function() {
-    alert ('ready function focus name field called');
     $('#name').focus(); //focus Name text field on page load
     $('#other').hide(); // progressive enhancement
     $('#other-title').hide(); // ??is this right? progressive enhancement. hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
 });
 
-$('#name').focus(); 
 //
  /***********
  * Job Role *
@@ -23,17 +19,17 @@ $('#name').focus();
  Note: You'll need to add the "Other" job role input directly into the HTML 
  and hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
 */
-
+/*
  $('#other-title').click(function(){
     $('#other').slideDown();
-    $('#other').focus();
     // const otherTitle = $('#other-title').val(); // ?? need? get what the user entered into this field
  });
- // one above or one below?  is the else clause necessary? 
+ // one above or one below?  is the else clause necessary? */
  $('#title').on('change', function() {
     if($('#title').val() === 'other') {
-        $('#other').slideDown();
+        $('#other').slideDown(); // where is the light blue text box to type in "other job"?
         $('#other').focus();
+        $('#other-title').html(); // where is the light blue text box to type in "other job"?
     }else {
         $('#other').hide();
     }
@@ -81,16 +77,61 @@ $('#design').change(function() {
 Some events are at the same day and time as others. If the user selects a workshop, don't allow selection of a workshop at the same day and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
 When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
 As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
+//$'activities input'.on  // .on checkbox click listener
 */
-//$'activities input'.on// .on checkbox click listener
+
+$('.activities input').on('change', function (){
+    if ($('input[name="js-frameworks"]').prop('checked')) {
+            $('input[name="express"]').attr('disabled', true);
+            $('input[name="express"]').parent().addClass('disable');
+    } 
+    if ($('input[name="express"]').prop('checked')) {
+            $('input[name="js-frameworks"]').attr('disabled', true);
+            $('input[name="js-frameworks"]').parent().addClass('disable'); 
+    }
+    if ($('input[name="js-libs"]').prop('checked')) {
+        $('input[name="node"]').attr('disabled', true);
+        $('input[name="node"]').parent().addClass('disable'); 
+}
+    
+});
+
+
+const activityOptions = $('.activities input');
+const costDiv = $('<div id="costDiv">Total Cost: $</div>');
+const costSpan = $('<span></span>');
+$('activities').append(costDiv).append(costSpan);
+
+let totalCost = 0;
+/*
+for(let i=0; i<activitiesOptions.length; i++) {
+    if(activityOptions.eq(i).attr('name') === 'all') {
+        totalCost += 200;
+    } else {
+        totalCost += 100;
+    }
+    return totalCost;
+};
+
+
+
 // if .name === 'all'  add $200 to total due
 // else add $100 to total due 
-
+*/
 // "js-frameworks" &
 // "express" at the same time.  if one is checked grey and disable checkbox of other
 
 // "js-libs" &
 // "node"  at the same time.  if one is checked grey and disable checkbox of other
+
+
+$('input[type="checkbox"]').on('click', function() {
+    if ($('.activities').name() === 'js-frameworks') {
+        $('.activities [name="express"]').hide();
+     if ($('.activities').name() === 'express') {
+        $('.activities [name="js-frameworks"]').hide();
+      // State has changed to checked/unchecked.
+};
 
 
 /*"Payment Info" section
@@ -150,6 +191,4 @@ Review material in the unit.
 Practice your Google skills by finding different ways to ask the questions you have, paying close attention to the sort of results you get back depending on how your questions are worded.
 NOTE: What you submit is what will get reviewed.
 
-When you submit your project, a snapshot is taken of your repository, and that is what the reviewer will see. Consequently, any changes you make to your repo after you submit will not be seen by the reviewer. So before you submit, it's a smart idea to do a final check to make sure everything in your repo is exactly what you want to submit.
-
-*/
+When you submit your project, a snapshot is taken of your repository, and that is what the reviewer will see. Consequently, any changes you make to your repo after you submit will not be seen by the reviewer. So before you submit, it's a smart idea to do a final check to make sure everything in your repo is exactly what you want to submit*
