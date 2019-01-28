@@ -3,13 +3,12 @@
  ***********************/
 
 
-$(document).ready(function() {
+//$(document).ready(function() {
     $('#name').focus(); //focus Name text field on page load
     $('#other').hide(); // progressive enhancement
     $('#other-title').hide(); // ??is this right? progressive enhancement. hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
-});
-
 //
+
  /***********
  * Job Role *
  ***********/
@@ -80,58 +79,56 @@ As a user selects activities, a running total should display below the list of c
 //$'activities input'.on  // .on checkbox click listener
 */
 
-$('.activities input').on('change', function (){
+$('.activities input').on('change', function (){ //This function disables activities with competing time-slot 
     if ($('input[name="js-frameworks"]').prop('checked')) {
-            $('input[name="express"]').attr('disabled', true);
+            $('input[name="express"]').attr('disabled', true); 
             $('input[name="express"]').parent().addClass('disable');
+    } else {
+            $('input[name="express"]').removeAttr('disabled');
+            $('input[name="express"]').parent().removeClass('disable');
     } 
     if ($('input[name="express"]').prop('checked')) {
-            $('input[name="js-frameworks"]').attr('disabled', true);
+            $('input[name="js-frameworks"]').attr('disabled', true); 
             $('input[name="js-frameworks"]').parent().addClass('disable'); 
+    } else {
+            $('input[name="js-frameworks"]').removeAttr('disabled');
+            $('input[name="js-frameworks"]').parent().removeClass('disable');
     }
     if ($('input[name="js-libs"]').prop('checked')) {
-        $('input[name="node"]').attr('disabled', true);
+            $('input[name="node"]').attr('disabled', true); 
+            $('input[name="node"]').parent().addClass('disable'); 
         $('input[name="node"]').parent().addClass('disable'); 
-}
-    
+            $('input[name="node"]').parent().addClass('disable'); 
+    } else {
+            $('input[name="node"]').removeAttr('disabled');
+            $('input[name="node"]').parent().removeClass('disable');
+    }
+    if ($('input[name="node"]').prop('checked')) {
+            $('input[name="js-libs"]').attr('disabled', true); 
+            $('input[name="js-libs"]').parent().addClass('disable'); 
+    } else {
+            $('input[name="js-libs"]').removeAttr('disabled');
+            $('input[name="js-libs"]').parent().removeClass('disable'); 
+    }
 });
 
 
 const activityOptions = $('.activities input');
-const costDiv = $('<div id="costDiv">Total Cost: $</div>');
-const costSpan = $('<span></span>');
-$('activities').append(costDiv).append(costSpan);
-
 let totalCost = 0;
-/*
-for(let i=0; i<activitiesOptions.length; i++) {
-    if(activityOptions.eq(i).attr('name') === 'all') {
-        totalCost += 200;
-    } else {
-        totalCost += 100;
+let costDiv = $('<div id="costDiv"><span>Total Cost $'+ totalCost + '</span></div>');
+$('.activities').append(costDiv);
+ 
+$('.activities').on('change', function(event){ //must pass event in the function to work in firefox the event on the window mouse over, down, key press 
+    const activityString = $(event.target).parent().text(); //the parent is the label and it contains the text we are targetiong the last 3 characters which is the price
+    const pricePerActivity = parseInt(activityString.substring(activityString.length-3));
+    if ($(event.target).is(':checked')) {
+        totalCost += pricePerActivity;
+    } else { 
+        totalCost -= pricePerActivity;
     }
-    return totalCost;
-};
+$(costDiv).html('<div id="costDiv"><span>Total Cost $'+ totalCost + '</span></div>');
+});
 
-
-
-// if .name === 'all'  add $200 to total due
-// else add $100 to total due 
-*/
-// "js-frameworks" &
-// "express" at the same time.  if one is checked grey and disable checkbox of other
-
-// "js-libs" &
-// "node"  at the same time.  if one is checked grey and disable checkbox of other
-
-
-$('input[type="checkbox"]').on('click', function() {
-    if ($('.activities').name() === 'js-frameworks') {
-        $('.activities [name="express"]').hide();
-     if ($('.activities').name() === 'express') {
-        $('.activities [name="js-frameworks"]').hide();
-      // State has changed to checked/unchecked.
-};
 
 
 /*"Payment Info" section
@@ -141,7 +138,8 @@ When a user selects the "PayPal" payment option, the PayPal information should d
 When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
 NOTE: The user should not be able to select the "Select Payment Method" option from the payment select menu, because the user should not be able to submit the form without a chosen payment option.
 
-Form validation
+Form validation 
+//essentially making a meta function that checks that each individual part does not have an error . don't check the error on the cc if it is not the form of payment.
 If any of the following validation errors exist, prevent the user from submitting the form:
 Name field can't be blank.
 Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
@@ -191,4 +189,4 @@ Review material in the unit.
 Practice your Google skills by finding different ways to ask the questions you have, paying close attention to the sort of results you get back depending on how your questions are worded.
 NOTE: What you submit is what will get reviewed.
 
-When you submit your project, a snapshot is taken of your repository, and that is what the reviewer will see. Consequently, any changes you make to your repo after you submit will not be seen by the reviewer. So before you submit, it's a smart idea to do a final check to make sure everything in your repo is exactly what you want to submit*
+When you submit your project, a snapshot is taken of your repository, and that is what the reviewer will see. Consequently, any changes you make to your repo after you submit will not be seen by the reviewer. So before you submit, it's a smart idea to do a final check to make sure everything in your repo is exactly what you want to submit*/
