@@ -137,7 +137,36 @@ The "Credit Card" payment option should be selected by default. Display the #cre
 When a user selects the "PayPal" payment option, the PayPal information should display, and the credit card and “Bitcoin” information should be hidden.
 When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
 NOTE: The user should not be able to select the "Select Payment Method" option from the payment select menu, because the user should not be able to submit the form without a chosen payment option.
+*/
 
+const payMethod = $('#payment'); // gave up this route... but maybe?
+
+$('#credit-card').next().addClass('paypal'); //make it possible to select paypal and bitcoin
+$('#credit-card').next().next().addClass('bitcoin');
+
+$('#credit-card').show();// make credit card the default payment option by hiding other options 
+$('.paypal').hide(); 
+$('.bitcoin').hide();
+$('#payment option[value="select_method"]').hide();
+
+$(payMethod).on('change', function(event){ //.payment? (for=) or #payment? (id=) must pass event in the function to work in firefox the event on the window mouse over, down, key press 
+    $('#payment option[value="select_method"]').hide();// in this function or outside of it?
+    if (payMethod.val() === 'credit card') { 
+        $('#credit-card').show();
+        $('.paypal').hide();
+        $('.bitcoin').hide();
+    } else if (payMethod.val() === 'paypal') {
+        $('.paypal').show();
+        $('.bitcoin').hide();
+        $('#credit-card').hide();
+    } else if (payMethod.val() === 'bitcoin') {
+        $('.bitcoin').show();
+        $('.paypal').hide();
+        $('#credit-card').hide();
+    }
+}); 
+
+/*
 Form validation 
 //essentially making a meta function that checks that each individual part does not have an error . don't check the error on the cc if it is not the form of payment.
 If any of the following validation errors exist, prevent the user from submitting the form:
