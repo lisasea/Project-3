@@ -157,7 +157,7 @@ $(payMethod).on('change', function(event){ // must pass event in the function to
 }); 
 
 
-//Form validation 
+//Form validation //worked together with Natia and Indasia
 
 function validateForm() {
     let nameValue = $('#name').val();
@@ -179,25 +179,58 @@ function validateForm() {
         alert('You must select at least 1 activity.')
     }
 
-    if ()
+    let cardNumber = $('#cc-num').val();
+    let zip = $('#zip').val();
+    let cvv = $('#cvv').val();
+    if (payMethod.val() === 'credit card') {
+
+    // we have 3 more if elses which is the cc length 13-16 digits long
+    // zip is 5 digits long
+    // cvv is 3 digits long
+    };
+    if (isValidCardNumber(cardNumber)== true){
+        alert('cc # is valid');
+        }  //else throw error message and disable
+
+    if (isValidZip()== true){
+        alert('zip is valid');
+        } 
+        
+    if (isValidCvv()== true) {
+        alert('cvv is valid');
+        }
+ 
 };
 
 function isValidName(nameValue) { 
     return /^[a-zA-Z][a-zA-Z\s]+$/i.test(nameValue); 
 };
-// this regex taken from https://emailregex.com/
 
-function isValidEmail(emailValue) {	
+
+function isValidEmail(emailValue) {	// this regex taken from https://emailregex.com/
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailValue);
 };
 
+function isValidCardNumber(cardNumber) {
+    return /^\d{13,16}D*$/.test(cardNumber);
+}
 
+function isValidZip(zip) {
+    return /^\d{5}$/.test(zip);
+    console.log(zip);
+}
+
+function isValidCvv(cvv) {
+    return /^\d{3}$/.test(cvv);
+}
 
 $('button').on('click', function(e) {
     e.preventDefault();
     
     validateForm();
   });
+
+  // https://github.com/lisasea/Project-3/blob/master/js/script.js
 
 // if not validate form (any false) 
 //e.preventDefault();
