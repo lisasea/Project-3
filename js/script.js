@@ -188,16 +188,16 @@ function validateForm() {
     // zip is 5 digits long
     // cvv is 3 digits long
     };
-    if (isValidCardNumber(cardNumber)== true){
-        alert('cc # is valid');
+    if (isValidCardNumber(cardNumber)== false){
+        alert('cc # is invalid');
         }  //else throw error message and disable
 
-    if (isValidZip()== true){
-        alert('zip is valid');
+    else if (isValidZip(zip)== false){
+        alert('zip is invalid');
         } 
         
-    if (isValidCvv()== true) {
-        alert('cvv is valid');
+    else if (isValidCvv(cvv)== false) {
+        alert('cvv is invalid');
         }
  
 };
