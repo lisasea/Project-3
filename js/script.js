@@ -7,7 +7,6 @@
     $('#name').focus(); //focus Name text field on page load
     $('#other').hide(); // progressive enhancement
     $('#other-title').hide(); // ??is this right? progressive enhancement. hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
-//
 
  /***********
  * Job Role *
@@ -18,12 +17,7 @@
  Note: You'll need to add the "Other" job role input directly into the HTML 
  and hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
 */
-/*
- $('#other-title').click(function(){
-    $('#other').slideDown();
-    // const otherTitle = $('#other-title').val(); // ?? need? get what the user entered into this field
- });
- // one above or one below?  is the else clause necessary? */
+
  $('#title').on('change', function() {
     if($('#title').val() === 'other') {
         $('#other').slideDown(); // where is the light blue text box to type in "other job"?
@@ -34,9 +28,6 @@
     }
  });
  
-
-
-
  /******************
  * T-Shirt         *
  *******************/
@@ -76,7 +67,6 @@ $('#design').change(function() {
 Some events are at the same day and time as others. If the user selects a workshop, don't allow selection of a workshop at the same day and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
 When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
 As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
-//$'activities input'.on  // .on checkbox click listener
 */
 
 $('.activities input').on('change', function (){ //This function disables activities with competing time-slot 
@@ -139,7 +129,7 @@ When a user selects the "Bitcoin" payment option, the Bitcoin information should
 NOTE: The user should not be able to select the "Select Payment Method" option from the payment select menu, because the user should not be able to submit the form without a chosen payment option.
 */
 
-const payMethod = $('#payment'); // gave up this route... but maybe?
+const payMethod = $('#payment');
 
 $('#credit-card').next().addClass('paypal'); //make it possible to select paypal and bitcoin
 $('#credit-card').next().next().addClass('bitcoin');
@@ -149,8 +139,8 @@ $('.paypal').hide();
 $('.bitcoin').hide();
 $('#payment option[value="select_method"]').hide();
 
-$(payMethod).on('change', function(event){ //.payment? (for=) or #payment? (id=) must pass event in the function to work in firefox the event on the window mouse over, down, key press 
-    $('#payment option[value="select_method"]').hide();// in this function or outside of it?
+$(payMethod).on('change', function(event){ // must pass event in the function to work in firefox the event on the window mouse over, down, key press 
+    $('#payment option[value="select_method"]').hide();
     if (payMethod.val() === 'credit card') { 
         $('#credit-card').show();
         $('.paypal').hide();
@@ -166,9 +156,192 @@ $(payMethod).on('change', function(event){ //.payment? (for=) or #payment? (id=)
     }
 }); 
 
+
+//Form validation 
+
+function validateForm() {
+    let nameValue = $('#name').val();
+    if (isValidName(nameValue)== true){
+        alert('name is valid');
+    } else {
+        alert('bad name input. give error message an disable submit button');
+    } 
+
+    let emailValue = $('#mail').val();
+    console.log(emailValue);
+    if (isValidEmail(emailValue)== true){
+        alert('email is valid');
+    } else {
+        alert('email is bad');
+    }
+
+    if (totalCost === 0) {
+        alert('You must select at least 1 activity.')
+    }
+
+    if ()
+};
+
+function isValidName(nameValue) { 
+    return /^[a-zA-Z][a-zA-Z\s]+$/i.test(nameValue); 
+};
+// this regex taken from https://emailregex.com/
+
+function isValidEmail(emailValue) {	
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailValue);
+};
+
+
+
+$('button').on('click', function(e) {
+    e.preventDefault();
+    
+    validateForm();
+  });
+
+// if not validate form (any false) 
+//e.preventDefault();
+
+//activity if totalCost === 0 // then error you must select
+
+
+//const emailInput = document.getEmailbyId('mail');
+////const nameValue = $('#name').val();
+
+//console.log('isValidEmail function ran');
+
+
+
 /*
-Form validation 
-//essentially making a meta function that checks that each individual part does not have an error . don't check the error on the cc if it is not the form of payment.
+$(document).ready(function() {
+$('.submit').click(function() { // why don't I need another } ? // function(event?)
+    validateForm();
+});
+
+function validateForm() {
+    let validName = /^[A-Za-z]+$/; //const?
+    //let validNumber = /^[0-9]+$/;  //const?
+    let validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; //const?
+};
+// if validateitem(x) = validTest(x)
+// then item is valid
+// in case of paying with CC check the addition 3 validation 
+    //paying w/ CC? - 13-16 digits/   which is \d{13,16}
+    //zip 5 digits
+    //cvv 3 digits
+// else = failed test
+// alert error and valid requirement message
+// and disable submit button
+
+const validName = () => {
+    let validN = /^[A-Za-z\s]+$/;
+}
+
+console.log('first if'); //to test code
+console.log('first else'); // to test code
+
+$('button').on('click', function(e) {
+    e.preventDefault();
+    
+    validateForm();
+  });
+/*
+meta function
+tests validity: name; email; activity; paying w/ CC? - 13-16 digits/zip 5 digits/cvv 3 digits
+
+or
+
+function for each validity test and then
+
+if validName || validNumber || validEmail || validActivity || validCcInfo = false
+    alert error message // Error.  ____ is invalid.  Please enter...
+    disable submit button //e.preventDefault();
+*/
+
+//if 
+
+// else
+// alert "Error! Please enter Name using letters only."
+// disable submit
+
+//if
+
+//else
+// alert "Error! Please enter valid email."
+// disable submit
+
+//if
+//function isValidActivity() {
+
+//};
+///else 
+// alert "Error! Please choose at least one activity."
+// disable submit
+
+//if
+//function isValidCcInfo(creditcard) {
+  //if payment === credit-card
+ // function isValidLength () {
+ //    return /\d{13,16}/.test(input.length);
+ // } else {
+   // alert "Error! Please enter a valid credirt card number between 13 and 16 digits long."
+// disable submit
+ // }
+  //if 
+  //function isValidZip(zip) {
+  //    return /\d{5}/.test(zip);
+  //} //else {
+    // alert "Error! Please enter a valid zip code 5 digits long."
+ // disable submit
+
+
+
+/*
+//essentially making a meta function that checks that each individual part does not 
+have an error . 
+//don't check the error on the cc if it is not the form of payment.
+Keep in mind how if else statements work when designing your validation. 
+Only the first matching condition is going to be acted upon. As you will see when you 
+add the console statements, if the user tries to submit the form with the name field
+left blank it is the if else statement that currently just returns false that is
+triggered not the else statement that adds the error message.
+
+essentially making a meta function that checks that each individual part does not 
+have an error . 
+//don't check the error on the cc if it is not the form of payment.
+Keep in mind how if else statements work when designing your validation. 
+Only the first matching condition is going to be acted upon. As you will see when you 
+add the console statements, if the user tries to submit the form with the name field
+left blank it is the if else statement that currently just returns false that is
+triggered not the else statement that adds the error message.
+*/
+/*
+else all is valid
+    submit data
+    alert "Your information has been successfully submitted! Thank you."
+
+or
+
+if validName && validNumber && validEmail && validActivity && validCcInfo = true
+    submit data
+    alert "Your information has been successfully submitted! Thank you."
+else 
+    alert error message // "Error.  ____ is invalid.  Please enter..."
+    disable submit button //e.preventDefault();
+*/
+
+//error message if error exists
+// disable submit button
+// name field can not be blank
+// email must be valid email
+// activities - must have checked at least 1 activity
+// if paying with CC make sure CC # is between 13-16 digits long
+// if paying with CC zipcode - 5 digit number
+// if paying with CC cvv - only accept a 3 digit number
+
+
+
+/*
 If any of the following validation errors exist, prevent the user from submitting the form:
 Name field can't be blank.
 Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like one: dave@teamtreehouse.com for example.
