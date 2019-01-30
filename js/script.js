@@ -161,44 +161,42 @@ $(payMethod).on('change', function(event){ // must pass event in the function to
 
 function validateForm() {
     let nameValue = $('#name').val();
-    if (isValidName(nameValue)== true){
-        alert('name is valid');
-    } else {
-        alert('bad name input. give error message an disable submit button');
+    if (isValidName(nameValue)== false){
+        $('#name').css('border-color', 'red');
+        setTimeout(function(){alert('Error! Please enter your name.');}, 3000);//name input. give error message an disable submit button');
     } 
 
     let emailValue = $('#mail').val();
-    console.log(emailValue);
-    if (isValidEmail(emailValue)== true){
-        alert('email is valid');
-    } else {
-        alert('email is bad');
-    }
+    if (isValidEmail(emailValue)== false){
+        $('#mail').css('border-color', 'red');
+        setTimeout(function(){alert('Error! Please enter valid email.');}, 1500);
+    } 
 
-    if (totalCost === 0) {
-        alert('You must select at least 1 activity.')
+    if (totalCost === 0) { 
+        alert('Error! You must select at least 1 activity. Please make your selection.');
     }
 
     let cardNumber = $('#cc-num').val();
     let zip = $('#zip').val();
     let cvv = $('#cvv').val();
+
     if (payMethod.val() === 'credit card') {
 
-    // we have 3 more if elses which is the cc length 13-16 digits long
-    // zip is 5 digits long
-    // cvv is 3 digits long
-    };
-    if (isValidCardNumber(cardNumber)== false){
-        alert('cc # is invalid');
-        }  //else throw error message and disable
+        if (isValidCardNumber(cardNumber)== false){
+            $('#cc-num').css('border-color', 'red');
+            setTimeout(function(){alert('Error! CC# is invalid. Must be 13-16 digits long.');}, 1500);
+            }  //else throw error message and disable
 
-    else if (isValidZip(zip)== false){
-        alert('zip is invalid');
-        } 
-        
-    else if (isValidCvv(cvv)== false) {
-        alert('cvv is invalid');
-        }
+        else if (isValidZip(zip)== false){
+            $('#zip').css('border-color', 'red');
+            setTimeout(function(){alert('Error! Your zip code is invalid. Must be 5 digits long.');}, 1500);
+            } 
+            
+        else if (isValidCvv(cvv)== false) {
+            $('#cvv').css('border-color', 'red');
+            setTimeout(function(){alert('Error! Your cvv is invalid. Must be 3 digits long.');}, 1500);
+            }
+    };
  
 };
 
