@@ -1,44 +1,28 @@
-/***********************
- * Global Variables    *
- ***********************/
-
-
-//$(document).ready(function() {
+/********************
+ * Global Variables *
+ *******************/
     $('#name').focus(); //focus Name text field on page load
-    $('#other').hide(); // progressive enhancement
-    $('#other-title').hide(); // ??is this right? progressive enhancement. hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
+    $('#other').hide(); //hide "Other" Job Role 
+    $('#other-title').hide(); //hide "Other" Job Role 
+    const payMethod = $('#payment'); //used in "Payment" section below
 
  /***********
  * Job Role *
  ***********/
-/* 
-”Job Role” section
- Include a text field that will be revealed when the "Other" option is selected from the "Job Role" drop down men. Give the field an id of “other-title,” and add the placeholder text of "Your Job Role".
- Note: You'll need to add the "Other" job role input directly into the HTML 
- and hide it initially with JS in order to get this feature to work when JS is disabled, which is a requirement below.
-*/
-
- $('#title').on('change', function() {
+ $('#title').on('change', function() { //text field for "other" option in Job Role section 
     if($('#title').val() === 'other') {
-        $('#other').slideDown(); // where is the light blue text box to type in "other job"?
+        $('#other').slideDown(); 
         $('#other').focus();
-        $('#other-title').html(); // where is the light blue text box to type in "other job"?
+        $('#other-title').html(); 
     }else {
         $('#other').hide();
     }
  });
  
- /******************
- * T-Shirt         *
- *******************/
-/*
- ”T-Shirt Info” section
-For the T-Shirt "Color" menu, only display the color options that match the design selected in the "Design" menu.
-If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
-When a new theme is selected from the "Design" menu, the "Color" field and drop down menu is updated. */
-
-$('#design').change(function() {
+ /***********
+ * T-Shirt  *
+ ***********/
+$('#design').change(function() { // displays only the color options that match the design selected
     if ($('#design').val() === 'js puns') {
         $('#colors-js-puns').show();
         $('#color option[value="cornflowerblue"]').show().attr('selected', '');
@@ -62,13 +46,9 @@ $('#design').change(function() {
     };
 });
 
-
-/*”Register for Activities” section
-Some events are at the same day and time as others. If the user selects a workshop, don't allow selection of a workshop at the same day and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
-When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
-*/
-
+ /*************
+ * Activities *
+ *************/
 $('.activities input').on('change', function (){ //This function disables activities with competing time-slot 
     if ($('input[name="js-frameworks"]').prop('checked')) {
             $('input[name="express"]').attr('disabled', true); 
@@ -103,12 +83,12 @@ $('.activities input').on('change', function (){ //This function disables activi
 });
 
 
-const activityOptions = $('.activities input');
+const activityOptions = $('.activities input'); //create space to track total cost of activities chosen
 let totalCost = 0;
 let costDiv = $('<div id="costDiv"><span>Total Cost $'+ totalCost + '</span></div>');
 $('.activities').append(costDiv);
  
-$('.activities').on('change', function(event){ //must pass event in the function to work in firefox the event on the window mouse over, down, key press 
+$('.activities').on('change', function(event){ //track total cost of activities chosen
     const activityString = $(event.target).parent().text(); //the parent is the label and it contains the text we are targetiong the last 3 characters which is the price
     const pricePerActivity = parseInt(activityString.substring(activityString.length-3));
     if ($(event.target).is(':checked')) {
@@ -120,16 +100,9 @@ $(costDiv).html('<div id="costDiv"><span>Total Cost $'+ totalCost + '</span></di
 });
 
 
-
-/*"Payment Info" section
-Display payment sections based on the payment option chosen in the select menu.
-The "Credit Card" payment option should be selected by default. Display the #credit-card div, and hide the "PayPal" and "Bitcoin" information. Payment option in the select menu should match the payment option displayed on the page.
-When a user selects the "PayPal" payment option, the PayPal information should display, and the credit card and “Bitcoin” information should be hidden.
-When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
-NOTE: The user should not be able to select the "Select Payment Method" option from the payment select menu, because the user should not be able to submit the form without a chosen payment option.
-*/
-
-const payMethod = $('#payment');
+ /**********
+ * Payment *
+ **********/
 
 $('#credit-card').next().addClass('paypal'); //make it possible to select paypal and bitcoin
 $('#credit-card').next().next().addClass('bitcoin');
@@ -139,7 +112,7 @@ $('.paypal').hide();
 $('.bitcoin').hide();
 $('#payment option[value="select_method"]').hide();
 
-$(payMethod).on('change', function(event){ // must pass event in the function to work in firefox the event on the window mouse over, down, key press 
+$(payMethod).on('change', function(event){ //once a payment method has been chosen hide the other options
     $('#payment option[value="select_method"]').hide();
     if (payMethod.val() === 'credit card') { 
         $('#credit-card').show();
@@ -156,10 +129,11 @@ $(payMethod).on('change', function(event){ // must pass event in the function to
     }
 }); 
 
+ /******************
+ * Form Validation *
+ ******************///worked together with Natia and Indasia
 
-//Form validation //worked together with Natia and Indasia
-
-function validateForm() {
+function validateForm() { //function to make sure inputs are valid before submit can be executed
     let nameValue = $('#name').val();
     if (isValidName(nameValue)== false){
         $('#name').css('border-color', 'red');
@@ -185,7 +159,7 @@ function validateForm() {
         if (isValidCardNumber(cardNumber)== false){
             $('#cc-num').css('border-color', 'red');
             setTimeout(function(){alert('Error! CC# is invalid. Must be 13-16 digits long.');}, 1500);
-            }  //else throw error message and disable
+            }  
 
         else if (isValidZip(zip)== false){
             $('#zip').css('border-color', 'red');
@@ -200,29 +174,29 @@ function validateForm() {
  
 };
 
-function isValidName(nameValue) { 
+function isValidName(nameValue) { //test to see the 'Name' input is letters only
     return /^[a-zA-Z][a-zA-Z\s]+$/i.test(nameValue); 
 };
 
 
-function isValidEmail(emailValue) {	// this regex taken from https://emailregex.com/
+function isValidEmail(emailValue) {	//test to see email is valid. This regex taken from https://emailregex.com/
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailValue);
 };
 
-function isValidCardNumber(cardNumber) {
+function isValidCardNumber(cardNumber) { //test to see the credit card number provided is 13-16 digits long
     return /^\d{13,16}D*$/.test(cardNumber);
 }
 
-function isValidZip(zip) {
+function isValidZip(zip) { //test to see the zip code provided is 5 digits long
     return /^\d{5}$/.test(zip);
     console.log(zip);
 }
 
-function isValidCvv(cvv) {
+function isValidCvv(cvv) { //test to see the cvv number provided is 3 digits long
     return /^\d{3}$/.test(cvv);
 }
 
-$('button').on('click', function(e) {
+$('button').on('click', function(e) { //when "Submit" button is pushed validate form first
     e.preventDefault();
     
     validateForm();
