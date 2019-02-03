@@ -140,19 +140,20 @@ function validateForm() { //function to make sure inputs are valid before submit
     if (isValidName(nameValue)== false){
         isValid = false;
         $('#name').css('border-color', 'red');
-        setTimeout(function(){alert('Error! Please enter your name using only letters.');}, 3000);//name input. give error message an disable submit button');
+        $('#name').attr('placeholder', 'Error! Please enter your name using only letters.');
     } 
 
     let emailValue = $('#mail').val();
     if (isValidEmail(emailValue)== false){
         isValid = false;
         $('#mail').css('border-color', 'red');
-        setTimeout(function(){alert('Error! Please enter valid email.');}, 1500);
+        $('#mail').attr('placeholder', 'Error! Please enter valid email.');
     } 
 
     if (totalCost === 0) { 
         isValid = false;
-        alert('Error! You must select at least 1 activity. Please make your selection.');
+        $('.activities legend').css('color', 'red');
+        $('.activities legend').text('Error! You must select at least 1 activity. Please make your selection.');
     }
 
     let cardNumber = $('#cc-num').val();
@@ -164,19 +165,19 @@ function validateForm() { //function to make sure inputs are valid before submit
         if (isValidCardNumber(cardNumber)== false){
             isValid = false;
             $('#cc-num').css('border-color', 'red');
-            setTimeout(function(){alert('Error! CC# is invalid. Must be 13-16 digits long.');}, 1500);
+            $('#cc-num').attr('placeholder', 'Error! Enter 13-16 digit CC #.');
             }  
 
         else if (isValidZip(zip)== false){
             isValid = false;
             $('#zip').css('border-color', 'red');
-            setTimeout(function(){alert('Error! Your zip code is invalid. Must be 5 digits long.');}, 1500);
+            $('#zip').attr('placeholder', 'Error! Enter a 5 digit zip code.');
             } 
             
         else if (isValidCvv(cvv)== false) {
             isValid = false;
             $('#cvv').css('border-color', 'red');
-            setTimeout(function(){alert('Error! Your cvv is invalid. Must be 3 digits long.');}, 1500);
+            $('#cvv').attr('placeholder', 'Error! Enter 3 digit CVV #.');
             }
     };
     return isValid;
@@ -206,6 +207,7 @@ function isValidCvv(cvv) { //test to see the cvv number provided is 3 digits lon
 
 $('button').on('click', function(e) { //when "Submit" button is pushed validate form first
     if(!validateForm()) { //!validateForm means "not validateForm"
+    alert('Please correct errors and resubmit.');
     e.preventDefault();
     }
 });
